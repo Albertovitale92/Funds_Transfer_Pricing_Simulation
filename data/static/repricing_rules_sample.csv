@@ -1,0 +1,19 @@
+rule_id,priority,raw_portfolio,side,product_type,rate_type,interest_rate_index,contractual_repricing_frequency,fixed_rate_period_bucket,amortization_profile,behavioral_profile,valuation_basis,contractual_maturity_bucket,repricing_bucket,mapping_method,notes
+control_totals,10,*,*,total,*,*,*,*,*,*,*,*,total,control_row,Control rows are not FTP-priced.
+non_rate_sensitive,20,*,*,*,non_interest_bearing,*,*,*,*,*,non_interest_balance,*,non_rate_sensitive,rate_type,Non-interest-bearing balances have no direct rate repricing.
+administered_customer_rates,30,*,*,*,administered,administered_customer_rate,administered,*,*,non_maturity_deposit,*,*,administered,behavioral,Administered non-maturity customer rates are mapped outside contractual tenor buckets.
+contractual_term_deposits,40,*,liability,deposit,fixed,fixed_rate,contractual,*,*,contractual_term,*,*,contractual,contractual,Term deposits use contractual repricing unless a product override is added.
+collateralized_fair_value,50,*,*,derivative_mtm,market_sensitive,collateral_rate,not_applicable,*,*,collateralized,collateralized_fair_value,*,collateral_sensitive,collateral,Derivative exposures are driven by collateral and margining assumptions.
+trading_and_fair_value,60,*,*,*,market_sensitive,market_price,not_applicable,*,*,market_sensitive,fair_value,*,market_sensitive,market_value,Trading and fair-value balances are market-price sensitive.
+swap_curve_assets,70,*,asset,liquidity_securities,fixed,fixed_rate,fixed_until_maturity,1y_plus,*,contractual,amortized_cost,*,swap_curve_sensitive,curve_family,Fixed-rate liquidity securities are mapped to the swap curve unless challenged.
+issuer_curve_funding,80,*,liability,long_term_debt,*,*,mixed_or_fixed_until_maturity,1y_plus,*,contractual,amortized_cost,*,issuance_curve_sensitive,curve_family,Issued debt maps to the bank issuance curve.
+overnight_reset,100,*,*,*,*,*,overnight,*,*,*,*,*,overnight,reset_frequency,Daily-reset or overnight balances.
+overnight_to_1m_reset,110,*,*,*,*,*,overnight_to_1m,*,*,*,*,*,overnight_to_1m,reset_frequency,Short wholesale balances repricing inside one month.
+overnight_to_3m_reset,120,*,*,*,*,*,overnight_to_3m,*,*,*,*,*,overnight_to_3m,reset_frequency,Repo and reverse repo balances repricing inside three months.
+zero_to_3m_reset,130,*,*,*,*,*,0_3m,*,*,*,*,*,0_3m,reset_frequency,Short-term fixed or floating balances repricing inside three months.
+one_to_3m_reset,140,*,*,*,*,*,1_3m,*,*,*,*,*,1_3m,reset_frequency,One-to-three-month reset bucket.
+one_month_to_3m_reset,150,*,*,*,*,*,1m_3m,*,*,*,*,*,1m_3m,reset_frequency,One-month-to-three-month floating-rate reset bucket.
+three_to_6m_reset,160,*,*,*,*,*,3m_6m,*,*,*,*,*,3m_6m,reset_frequency,Three-to-six-month floating-rate reset bucket.
+zero_to_1y_reset,170,*,*,*,*,*,0_1y,*,*,*,*,*,0_1y,reset_frequency,Reset or maturity inside one year.
+fixed_1y_3y,200,*,*,*,fixed,fixed_rate,*,1y_3y,*,*,*,*,1y_3y,duration_proxy,Fixed-rate product mapped from modeled fixed-rate period.
+fixed_3y_5y,210,*,*,*,fixed,fixed_rate,*,3y_5y,*,*,*,*,3y_5y,duration_proxy,Fixed-rate product mapped from modeled fixed-rate period.
