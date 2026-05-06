@@ -87,4 +87,3 @@ __all__ = [
     "compute_nmd_repricing_ladder",
     "estimate_loan_equivalent_maturity",
 ]
-
