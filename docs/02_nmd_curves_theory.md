@@ -2,11 +2,11 @@
 
 ## Overview
 
-A **Non-Maturity Deposit (NMD)** is a customer deposit without a fixed contractual maturity (e.g., checking accounts, savings accounts). Unlike a 1-year fixed-rate deposit that reprices on a known date, an NMD reprices when the customer chooses—or when the bank changes the administered rate.
+A **Non-Maturity Deposit (NMD)** is a customer deposit without a fixed contractual maturity (e.g., checking accounts, savings accounts). Unlike a 1-year fixed-rate deposit that reprices on a known date, an NMD has no contractual repricing date. Its economics change when the customer leaves, adds or withdraws balances, or when the bank changes the administered customer rate.
 
-The **NMD Curve** models when and how these deposits reprice in response to market conditions, using **behavioral assumptions** like deposit beta and stickiness. This is critical for FTP because:
+The **NMD Curve** models how long the balances are expected to remain stable and how sensitive their administered rates are to market conditions, using **behavioral assumptions** like deposit beta and stickiness. This is critical for FTP because:
 - NMDs represent a large, stable funding source for banks.
-- They reprice differently (more slowly) than market rates due to customer inertia.
+- Their customer rates and balances adjust differently, usually more slowly than market rates, due to customer inertia.
 - Regulatory requirements (NSFR, LCR) care about deposit "stickiness."
 
 ---
@@ -57,17 +57,20 @@ The **NMD Curve** models when and how these deposits reprice in response to mark
 
 A checking account has **no contractual maturity**, but it has an **effective (behavioral) maturity**.
 
-**Effective maturity** = How long, on average, before a deposit reprices in response to market conditions.
+**Effective maturity** = The modeled time profile over which a non-maturing deposit behaves like stable funding.
+
+NMDs do not have a contractual repricing date in the same way a fixed-term deposit or bond does. In FTP, "repricing" is shorthand for the point at which the bank's assumed funding benefit changes because customer balances run off, customer rates are adjusted, or the bank must replace the behavioral NMD funding with market funding.
 
 **Example:**
 - Retail deposits have high beta (0.5) and slow repricing.
-- Effective maturity: ~1-5 years (it takes years for most customers to reprice).
+- Effective maturity: ~1-5 years (the stable funding benefit is expected to decay over several years).
 - Wholesale deposits have high beta (0.95) and fast repricing.
-- Effective maturity: ~0.25-1 year (institutional money moves within weeks/months).
+- Effective maturity: ~0.25-1 year (institutional balances can move within weeks/months).
 
 **Why This Matters for FTP:**
-- If a bank funds a 10-year mortgage with a 5-year-maturity NMD, there's **duration mismatch** (interest rate risk).
-- The NMD could reprice sooner than expected if rates fall (customers flee) or later if rates rise (customers stay).
+- If a bank funds a 10-year mortgage with an NMD segment modeled as 5-year behavioral funding, there's **duration mismatch** (interest rate risk).
+- The NMD is not contractually priced for five years. The bank observes deposit stickiness and customer-rate sensitivity, then converts the expected stable portion into fixed-term FTP funding.
+- If behavior differs from the model, the FTP funding profile changes: balances may run off sooner than expected, deposit rates may need to be adjusted faster, or the bank may need to replace the assumed NMD funding with market funding earlier. If balances are stickier than expected, the behavioral funding can last longer than modeled.
 
 ---
 

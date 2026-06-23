@@ -21,21 +21,10 @@ Organized into 5 categories:
 
 ### 2. **Risk_Factors Project: Core Funding Curves**
 
-#### ✅ Central Bank Remuneration Curve (COMPLETE)
-- **Code**: `risk_factors/curves/central_bank_rates.py`
-  - Classes: `CentralBankRate`, functions for ECB rate snapshots
-  - Learning function: `compute_opportunity_cost_of_excess_liquidity()`
-  - Curve builder: `create_central_bank_remuneration_curve()`
-- **Theory**: `risk_factors/docs/01_central_bank_remuneration_theory.md`
-  - Complete explanation of DFR, risk-free rates, policy transmission
-  - Learning exercises (opportunity cost calculation)
-  - Interview relevance
-  - Code examples
-- **Test**: `test_curves_init.py` — ✅ Passes
-  - Validates central bank curve creation
-  - Validates opportunity cost calculation (€65m for €130B at 5 bps spread)
-- **CSV**: `risk_factors/data/ftp_curve_taxonomy.csv`
-  - Core funding curves taxonomy with attributes
+#### 🔄 Central Bank Policy Rates (DATA SOURCE)
+- **Code**: `risk_factors` provides market/reference data fetchers.
+- **Scope**: Fetch ECB and market rate inputs only.
+- **FTP logic**: Remuneration curves, opportunity-cost calculations, and other pricing logic belong in the FTP Simulation layer, not in `risk_factors`.
 
 #### 🔄 Other Core Funding Curves (PLANNED)
 - Overnight Index Curve (ESTR)
@@ -143,17 +132,9 @@ Organized into 5 categories:
 
 ### Risk_Factors Example
 ```python
-from risk_factors.curves import create_central_bank_remuneration_curve, compute_opportunity_cost_of_excess_liquidity
+from risk_factors.api import risk_factors_api as rf
 
-# Create DFR curve
-dfr_curve = create_central_bank_remuneration_curve(dfr=0.035)
-# → Overnight rate = 3.5%
-
-# Calculate opportunity cost
-opp_cost = compute_opportunity_cost_of_excess_liquidity(
-    balance_eur_m=130_000, ecb_rate=0.035, market_rate=0.0355
-)
-# → Annual opportunity cost: €65m (5 bps spread × €130B)
+rates_curve = rf.get_rates_curve("eur_aaa", date="2026-05-06")
 ```
 
 ### FTP Simulation Example

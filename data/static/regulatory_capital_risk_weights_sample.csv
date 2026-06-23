@@ -1,0 +1,7 @@
+product_type,counterparty_type,base_risk_weight,short_maturity_multiplier,long_maturity_multiplier
+corporate_loan,corporate,1.00,0.90,1.15
+corporate_loan,bank,0.50,0.85,1.10
+retail_mortgage,secured_mortgage,0.35,1.00,1.05
+retail_nmd,retail,0.00,1.00,1.00
+corporate_nmd,corporate,0.00,1.00,1.00
+wholesale_deposit,wholesale,0.00,1.00,1.00

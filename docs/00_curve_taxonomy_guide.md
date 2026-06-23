@@ -30,22 +30,11 @@ This document describes the FTP curve taxonomy and its implementation across two
 
 These are **market-based curves** representing the cost of funds at different maturities and risk levels. They form the foundation of all FTP.
 
-#### 1. Central Bank Remuneration Curve ✅ IMPLEMENTED
-- **What**: ECB deposit facility rate (DFR); the risk-free overnight rate.
-- **Why**: Sets the floor for all funding costs. Banks prefer to deposit at ECB rather than lend below DFR.
-- **How**: Administered rate from ECB; no bootstrapping needed.
-- **Learning**: Understand monetary policy transmission and risk-free rates.
-- **FTP Use**: Price central_bank_cash portfolio (€130,000m in DB balance sheet).
-- **Code Location**: `risk_factors/curves/central_bank_rates.py`
-- **Theory**: See `Risk_Factors/docs/01_central_bank_remuneration_theory.md`
-
-**Key Functions:**
-```python
-from risk_factors.curves import (
-    create_central_bank_remuneration_curve,
-    compute_opportunity_cost_of_excess_liquidity,
-)
-```
+#### 1. Central Bank Policy Rates 🔄 DATA SOURCE
+- **What**: ECB deposit facility rate (DFR), main refinancing operations rate (MRO), and marginal lending facility rate (MLF).
+- **Why**: These administered rates anchor short-term funding costs and market curves.
+- **How**: Fetched from market/reference data sources; pricing and FTP calculations remain in the FTP Simulation layer.
+- **FTP Use**: Input data for central bank cash and other short-rate-linked FTP calculations.
 
 #### 2. Overnight Index Curve 🔄 PLANNED
 - **What**: ESTR (Euro Short-Term Rate); successor to EONIA.
@@ -325,10 +314,9 @@ FTP Simulation (FTP Application)
 **Example Data Flow:**
 ```python
 # In FTP Simulation
-from risk_factors.curves import create_central_bank_remuneration_curve
+from risk_factors.api import risk_factors_api as rf
 
-dfr_curve = create_central_bank_remuneration_curve(dfr=0.035)
-# Output: Central bank cash FTP rate = 3.5%
+rates_curve = rf.get_rates_curve("eur_aaa", date="2026-05-06")
 
 # Add behavioral overlay
 from ftp_simulation.curves import RETAIL_NMD, calculate_effective_maturity
